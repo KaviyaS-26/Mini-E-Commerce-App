@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Mini E-Commerce shop demo built with vanilla HTML, CSS, and JavaScript. Features interactive cart, category filters, live delivery calculation, and demo checkout preview.">
+  <title>Aura Goods — Mini E-Commerce</title>
+  
+  <!-- Preconnect and Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="#catalogue-section" class="brand-link" aria-label="Aura Goods Home">
+        <span class="brand-icon" aria-hidden="true">✦</span>
+        <span class="brand-name">Aura Goods</span>
+      </a>
+
+      <a href="#cart-section" class="cart-nav-btn" id="cart-nav-link" aria-label="View shopping cart">
+        <span class="cart-nav-icon" aria-hidden="true">🛒</span>
+        <span class="cart-nav-text">Cart</span>
+        <span id="cart-badge" class="cart-badge" aria-label="0 items in cart">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <!-- Catalogue Section -->
+    <section id="catalogue-section" class="catalogue-section" aria-labelledby="catalogue-heading">
+      <div class="section-header">
+        <div>
+          <h1 id="catalogue-heading" class="section-title">Curated Essentials</h1>
+          <p class="section-subtitle">Discover handcrafted everyday items designed for modern living.</p>
+        </div>
+      </div>
+
+      <!-- Category Filter Buttons -->
+      <nav id="category-filters" class="category-filters" aria-label="Filter products by category">
+        <!-- Rendered dynamically by app.js -->
+      </nav>
+
+      <!-- Products Grid -->
+      <div id="product-grid" class="product-grid" aria-live="polite">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section id="cart-section" class="cart-section" aria-labelledby="cart-heading">
+      <div class="section-header">
+        <div>
+          <h2 id="cart-heading" class="section-title">Your Shopping Bag</h2>
+          <p class="section-subtitle">Review your selected items and shipping details below.</p>
+        </div>
+      </div>
+
+      <!-- Free Delivery Hint Banner -->
+      <aside id="delivery-hint" class="delivery-hint" aria-live="polite" role="status">
+        <!-- Rendered dynamically by app.js -->
+      </aside>
+
+      <!-- Cart Content Grid -->
+      <div class="cart-layout">
+        <!-- Items Table Container -->
+        <div class="cart-table-wrapper" id="cart-table-wrapper">
+          <div class="table-responsive">
+            <table id="cart-table" class="cart-table">
+              <caption class="sr-only">Items currently in your shopping cart</caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="th-item">Product</th>
+                  <th scope="col" class="th-price">Price</th>
+                  <th scope="col" class="th-quantity">Quantity</th>
+                  <th scope="col" class="th-total">Total</th>
+                  <th scope="col" class="th-action"><span class="sr-only">Actions</span></th>
+                </tr>
+              </thead>
+              <tbody id="cart-items-body">
+                <!-- Rendered dynamically by app.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty Cart State -->
+          <div id="cart-empty-message" class="cart-empty-state" hidden>
+            <div class="empty-icon" aria-hidden="true">🛍️</div>
+            <h3 class="empty-title">Your cart is empty</h3>
+            <p class="empty-subtitle">Looks like you haven't added anything to your cart yet.</p>
+            <a href="#catalogue-section" class="btn btn-secondary empty-action-btn">Start Shopping</a>
+          </div>
+        </div>
+
+        <!-- Cart Summary Box -->
+        <div class="cart-summary-card">
+          <h3 class="summary-title">Order Summary</h3>
+
+          <div class="summary-breakdown">
+            <div class="summary-row">
+              <span class="summary-label">Subtotal</span>
+              <span id="summary-subtotal" class="summary-value">₹0.00</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label">Estimated Delivery</span>
+              <span id="summary-delivery" class="summary-value">₹0.00</span>
+            </div>
+            <div class="summary-divider" role="separator"></div>
+            <div class="summary-row summary-grand-total">
+              <span class="summary-label">Grand Total</span>
+              <span id="summary-grand-total" class="summary-value">₹0.00</span>
+            </div>
+          </div>
+
+          <button id="checkout-btn" class="btn btn-primary btn-checkout" type="button" disabled>
+            Proceed to Checkout
+          </button>
+          
+          <p class="demo-guarantee">
+            <span aria-hidden="true">🔒</span> Demo Store — No real payment required
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Checkout Preview Dialog -->
+  <dialog id="checkout" class="checkout-dialog" aria-labelledby="checkout-dialog-title">
+    <div class="dialog-content">
+      <div class="dialog-header">
+        <div class="dialog-title-group">
+          <span class="dialog-badge">Demo Preview</span>
+          <h2 id="checkout-dialog-title" class="dialog-title">Order Confirmation</h2>
+        </div>
+        <button id="close-checkout-btn-top" class="dialog-close-icon-btn" type="button" aria-label="Close checkout preview">
+          &times;
+        </button>
+      </div>
+
+      <div class="dialog-disclaimer">
+        <span class="disclaimer-icon" aria-hidden="true">ℹ️</span>
+        <p class="disclaimer-text"><strong>Demo only. No payment is taken.</strong> This is a simulation showing how your order would be summarized.</p>
+      </div>
+
+      <div class="dialog-body">
+        <h3 class="dialog-section-title">Items Ordered</h3>
+        <ul id="dialog-items-list" class="dialog-items-list">
+          <!-- Rendered dynamically by app.js -->
+        </ul>
+
+        <div class="dialog-totals">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="dialog-subtotal">₹0.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Delivery Fee</span>
+            <span id="dialog-delivery">₹0.00</span>
+          </div>
+          <div class="summary-divider" role="separator"></div>
+          <div class="summary-row summary-grand-total">
+            <span>Total Payable</span>
+            <span id="dialog-total">₹0.00</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialog-footer">
+        <button id="close-checkout-btn" class="btn btn-secondary dialog-close-btn" type="button">
+          Close Preview
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p class="footer-brand">✦ Aura Goods Demo Store</p>
+      <p class="footer-note">Built with pure HTML, CSS, and Vanilla JavaScript. All products and prices are fictional.</p>
+    </div>
+  </footer>
+</body>
+</html>
